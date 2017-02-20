@@ -1,17 +1,17 @@
 {
   "name": "ember-cli-launch-darkly",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Launch Darkly javascript sdk for ember-cli.",
   "keywords": [
     "ember-addon"
   ],
   "license": "MIT",
-  "author": "",
+  "author": "busy inc.",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": "git@github.com:busybusy/ember-cli-launch-darkly.git",
   "scripts": {
     "build": "ember build",
     "start": "ember server",
