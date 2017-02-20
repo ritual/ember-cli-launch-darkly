@@ -19,8 +19,6 @@
   },
   "dependencies": {
     "broccoli-browserify": "^0.1.0",
-    "broccoli-es3-safe-recast": "^2.0.0",
-    "broccoli-es6modules": "^1.2.3",
     "broccoli-funnel": "^1.0.6",
     "broccoli-merge-trees": "^1.1.4",
     "ember-cli-babel": "^5.1.7",
