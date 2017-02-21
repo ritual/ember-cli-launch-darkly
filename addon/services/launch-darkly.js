@@ -12,7 +12,9 @@ export default Ember.Service.extend(Ember.Evented, {
   initialize(id, user, options) {
     this._client = ldclient(id, user, options);
     this._client.on('ready', () => {
-      this.set('isInitialized', true);
+      if (!this.get('isDestroyed')) {
+        this.set('isInitialized', true);
+      }
     });
   },
 
