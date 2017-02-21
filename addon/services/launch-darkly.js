@@ -11,14 +11,9 @@ export default Ember.Service.extend(Ember.Evented, {
 
   initialize(id, user, options) {
     this._client = ldclient(id, user, options);
-
-   // this._client.on('change', function(data) {
-   //   this.trigger('change', data);
-   // }, this);
-   //
-   // this._client.on('ready', function() {
-   //   this.trigger('ready');
-   // }, this);
+    this._client.on('ready', () => {
+      this.set('isInitialized', true);
+    });
   },
 
 	/**
@@ -59,11 +54,12 @@ export default Ember.Service.extend(Ember.Evented, {
 	 * @param {String} key the identifying key for the feature, in the format `time.freemium`
 	 * @param {Boolean} defaultValue the default value to use
 	 */
-  variation(key, defaultValue) {
+  variation(key, defaultValue=false) {
     if (!this.get('isInitialized')) {
       Ember.Logger.warn("<service:launch-darkly::variation> was called before it was initialized");
     }
-    return this._client.variation(key, defaultValue);
+    let val = this._client.variation(key, defaultValue);
+    return val;
   },
 
   /**
@@ -72,7 +68,7 @@ export default Ember.Service.extend(Ember.Evented, {
    *
    * @public
    * @method identify
-   * @param user {string} user key
+   * @param user {object} user object
    * @param hash {object} hash for the user
    * @return {Ember.RSVP} a promsie object for onDone
    */
@@ -80,23 +76,40 @@ export default Ember.Service.extend(Ember.Evented, {
     if (!this.get('isInitialized')) {
       Ember.Logger.warn("<service:launch-darkly::track> was called before it was initialized");
     }
-    return Ember.RSVP.Promise(resolve => {
-      this._client.identify(user, hash, (res) => {
-        Ember.run(null, resolve, res);
+    return new Ember.RSVP.Promise(resolve => {
+      this._client.identify(user, hash, () => {
+        Ember.run(null, resolve, true);
       });
     });
   },
 
-  on(name, target, handler) {
+  /**
+   * on event handler
+   *
+   * @public
+   * @method on
+   * @param name {string}
+   * @param handler {function}
+   */
+  on(name, handler) {
     this._client.on(name, function(data) {
       this.trigger(name, data);
     }, this);
 
-    this._super(name, target, handler);
+    this._super(name, handler);
   },
 
-  off(name, target, handler) {
+
+  /**
+   * off event handler
+   *
+   * @public
+   * @method off
+   * @param name {string}
+   * @param handler {function}
+   */
+  off(name, handler) {
     this._client.off(name);
-    this._super(name, target, handler);
+    this._super(name, handler);
   }
 });

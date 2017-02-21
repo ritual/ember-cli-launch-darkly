@@ -1,27 +1,43 @@
 # ember-cli-launch-darkly
 
-This README outlines the details of collaborating on this Ember addon.
+Ember addon for integrating with launch darkly javascript sdk
 
 ## Installation
 
-* `git clone <repository-url>` this repository
-* `cd ember-cli-launch-darkly`
-* `npm install`
-* `bower install`
+* `ember install ember-cli-launch-darkly`
 
-## Running
+## Usage
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+ember-cli-launch-darkly addon sets up a service for injecting with `launchDarkly: Ember.inject.service()` the service itself will not do anything until
+`initialize` has benn called.
 
-## Running Tests
+The initialize method takes 3 params:
+```
+export default Ember.Object.extend({
+  launchDarkly: Ember.inject.service(),
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+  init() {
+    this._super();
+    let user = {
+      key: 'some_value',
+      firstName: 'foo',
+      lastMame: 'bar',
+    };
 
-## Building
+    let options = {
+      // launch darkly options here if needed
+    };
 
-* `ember build`
+    this.get('launchDarkly').initialize('LAUNCH_DARKLY_APP_ID', user, options);
+  }
+});
+```
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+After initialize is called then any methods on Launch Darkly's SDK can be called:
+```
+  var toggle = this.get('launchDarkly').variation(key, defaultValue);
+```
+
+For more information refer to the launch darkly sdk
+[launch darkly](http://docs.launchdarkly.com/docs/js-sdk-reference#section-changing-the-user-context)
+

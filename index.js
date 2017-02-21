@@ -5,8 +5,6 @@ var Funnel = require('broccoli-funnel');
 var mergeTrees = require('broccoli-merge-trees');
 var path = require('path');
 
-//var _config = require('./config/environment')();
-
 module.exports = {
   name: 'ember-cli-launch-darkly',
 
@@ -33,7 +31,7 @@ module.exports = {
     if(app.import) {
 		  var vendor = this.treePaths.vendor;
       app.import(vendor + '/ldclient-js/dist/ldclient.js', {prepend: true});
-      app.import('vendor/shims.js', {prepend: true});
+      //app.import('vendor/shims.js'); //, {prepend: true});
     }
 	},
 
@@ -46,7 +44,7 @@ module.exports = {
 
 		var ldPath = path.dirname('./node_modules/ldclient-js/dist');
 
-		trees.push(new Funnel(this.treeGenerator(ldPath), {
+		trees.push(new Funnel(ldPath, {
 			destDir: 'ldclient-js',
 			include: [new RegExp(/\.js$/)]
 		}));
