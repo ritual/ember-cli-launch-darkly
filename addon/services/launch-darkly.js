@@ -10,11 +10,14 @@ export default Ember.Service.extend(Ember.Evented, {
   isInitialized: false,
 
   initialize(id, user, options) {
-    this._client = ldclient(id, user, options);
-    this._client.on('ready', () => {
-      if (!this.get('isDestroyed')) {
-        this.set('isInitialized', true);
-      }
+    return new Ember.RSVP.Promise(resolve => {
+      this._client = ldclient(id, user, options);
+      this._client.on('ready', () => {
+        if (!this.get('isDestroyed')) {
+          this.set('isInitialized', true);
+          Ember.run(null, resolve, true);
+        }
+      });
     });
   },
 
