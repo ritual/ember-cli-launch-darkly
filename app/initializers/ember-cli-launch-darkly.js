@@ -1,4 +1,3 @@
-//import config from '../config/environment';
 import launchDarkly from '../services/launch-darkly';
 
 export function initialize() {
@@ -6,11 +5,7 @@ export function initialize() {
   let serviceLookupName = `service:launchDarkly`;
 
   application.register(serviceLookupName, launchDarkly);
- // application.inject('route', serviceName, serviceLookupName);
- // application.inject('controller', serviceName, serviceLookupName);
- // application.inject('component', serviceName, serviceLookupName);
   application.inject(serviceLookupName, 'application', 'application:main');
-  console.log('launchDarkly initializer');
 }
 
 export default {
