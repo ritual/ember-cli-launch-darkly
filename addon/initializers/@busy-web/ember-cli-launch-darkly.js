@@ -1,4 +1,4 @@
-import launchDarkly from '../services/launch-darkly';
+import launchDarkly from '@busy-web/ember-cli-launch-darkly/services/launch-darkly';
 
 export function initialize(application) {
   let serviceLookupName = `service:launchDarkly`;
