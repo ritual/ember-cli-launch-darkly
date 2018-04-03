@@ -7,7 +7,7 @@ import Service from '@ember/service';
 import Evented from '@ember/object/evented';
 import { warn } from '@ember/debug';
 import { run } from '@ember/runloop';
-import ldclient from 'ember-cli-launch-darkly/utils/launch-darkly-sdk';
+import ldclient from '@busy-web/ember-cli-launch-darkly/utils/launch-darkly-sdk';
 
 export default Service.extend(Evented, {
   _client: null,

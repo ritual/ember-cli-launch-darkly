@@ -5,7 +5,7 @@ var mergeTrees = require('broccoli-merge-trees');
 var path = require('path');
 
 module.exports = {
-  name: 'ember-cli-launch-darkly',
+  name: '@busy-web/ember-cli-launch-darkly',
 
   config(env, config) {
     const LDConfig = config['launch-darkly'] || {};

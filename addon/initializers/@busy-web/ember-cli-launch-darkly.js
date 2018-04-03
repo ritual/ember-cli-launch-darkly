@@ -1,7 +1,6 @@
 import launchDarkly from '../services/launch-darkly';
 
-export function initialize() {
-  let application = arguments[1] || arguments[0];
+export function initialize(application) {
   let serviceLookupName = `service:launchDarkly`;
 
   application.register(serviceLookupName, launchDarkly);
@@ -9,6 +8,5 @@ export function initialize() {
 }
 
 export default {
-  name: 'ember-cli-launch-darkly',
   initialize
 };

@@ -1,5 +1,5 @@
 {
-  "name": "ember-cli-launch-darkly",
+  "name": "@busy-web/ember-cli-launch-darkly",
   "version": "0.0.5",
   "description": "Launch Darkly javascript sdk for ember-cli.",
   "keywords": [

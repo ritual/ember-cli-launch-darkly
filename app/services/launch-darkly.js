@@ -1,1 +1,1 @@
-export { default } from 'ember-cli-launch-darkly/services/launch-darkly';
+export { default } from '@busy-web/ember-cli-launch-darkly/services/launch-darkly';
