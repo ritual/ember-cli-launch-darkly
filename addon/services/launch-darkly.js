@@ -2,20 +2,24 @@
  * @module Services
  *
  */
-import Ember from 'ember';
+import { Promise } from 'rsvp';
+import Service from '@ember/service';
+import Evented from '@ember/object/evented';
+import { warn } from '@ember/debug';
+import { run } from '@ember/runloop';
 import ldclient from 'ember-cli-launch-darkly/utils/launch-darkly-sdk';
 
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
   _client: null,
   isInitialized: false,
 
   initialize(id, user, options) {
-    return new Ember.RSVP.Promise(resolve => {
+    return new Promise(resolve => {
       this._client = ldclient(id, user, options);
       this._client.on('ready', () => {
         if (!this.get('isDestroyed')) {
           this.set('isInitialized', true);
-          Ember.run(null, resolve, true);
+          run(null, resolve, true);
         }
       });
     });
@@ -30,7 +34,7 @@ export default Ember.Service.extend(Ember.Evented, {
 	 */
 	track(key, data) {
     if (!this.get('isInitialized')) {
-      Ember.Logger.warn("<service:launch-darkly::track> was called before it was initialized");
+      warn("<service:launch-darkly::track> was called before it was initialized");
     }
 
     return this._client.track(key, data);
@@ -45,7 +49,7 @@ export default Ember.Service.extend(Ember.Evented, {
 	 */
 	allFlags() {
     if (!this.get('isInitialized')) {
-      Ember.Logger.warn("<service:launch-darkly::allFlags> was called before it was initialized");
+      warn("<service:launch-darkly::allFlags> was called before it was initialized");
     }
 		return this._client.allFlags();
 	},
@@ -61,7 +65,7 @@ export default Ember.Service.extend(Ember.Evented, {
 	 */
   variation(key, defaultValue=false) {
     if (!this.get('isInitialized')) {
-      Ember.Logger.warn("<service:launch-darkly::variation> was called before it was initialized");
+      warn("<service:launch-darkly::variation> was called before it was initialized");
     }
     let val = this._client.variation(key, defaultValue);
     return val;
@@ -75,15 +79,15 @@ export default Ember.Service.extend(Ember.Evented, {
    * @method identify
    * @param user {object} user object
    * @param hash {object} hash for the user
-   * @return {Ember.RSVP} a promsie object for onDone
+   * @return {Promise} a promsie object for onDone
    */
   identify(user, hash) {
     if (!this.get('isInitialized')) {
-      Ember.Logger.warn("<service:launch-darkly::track> was called before it was initialized");
+      warn("<service:launch-darkly::track> was called before it was initialized");
     }
-    return new Ember.RSVP.Promise(resolve => {
+    return new Promise(resolve => {
       this._client.identify(user, hash, () => {
-        Ember.run(null, resolve, true);
+        run(null, resolve, true);
       });
     });
   },

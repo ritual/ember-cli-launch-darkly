@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 
-export default Ember.Route.extend({
-  launchDarkly: Ember.inject.service('launch-darkly'),
+export default Route.extend({
+  launchDarkly: service('launch-darkly'),
 
   model() {
-    console.log('loaded route index', this.get('launchDarkly'));
+    window.console.log('loaded route index', this.get('launchDarkly'));
   }
 });
