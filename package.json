@@ -22,7 +22,7 @@
     "broccoli-funnel": "^1.0.6",
     "broccoli-merge-trees": "^1.1.4",
     "ember-cli-babel": "^6.6.0",
-    "ldclient-js": "^1.1.8"
+    "ldclient-js": "^1.6.1"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
