@@ -27,10 +27,9 @@ module.exports = {
   },
 
   importBrowserDeps(app) {
-    if(app.import) {
-		  var vendor = this.treePaths.vendor;
-      app.import(vendor + '/ldclient-js/dist/ldclient.js', {prepend: true});
-      //app.import('vendor/shims.js'); //, {prepend: true});
+    if (app.import) {
+			const vendor = this.treePaths.vendor;
+      app.import(vendor + '/launchdarkly-js-client-sdk/dist/ldclient.min.js', { prepend: true });
     }
 	},
 
@@ -41,10 +40,10 @@ module.exports = {
 			trees.push(vendorTree);
 		}
 
-		var ldPath = path.dirname('./node_modules/ldclient-js/dist');
+		var ldPath = path.dirname('./node_modules/launchdarkly-js-client-sdk/dist');
 
 		trees.push(new Funnel(ldPath, {
-			destDir: 'ldclient-js',
+			destDir: 'launchdarkly-js-client-sdk',
 			include: [new RegExp(/\.js$/)]
 		}));
 

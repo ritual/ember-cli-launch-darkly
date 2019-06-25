@@ -3,7 +3,8 @@ import Application from '@ember/application';
 import { initialize } from 'dummy/initializers/@busy-web/ember-cli-launch-darkly';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import destroyApp from '../../helpers/destroy-app';
+import { run } from '@ember/runloop';
+import destroyApp from '../../../helpers/destroy-app';
 
 module('Unit | Initializer | @busy-web/ember-cli-launch-darkly', function(hooks) {
   setupTest(hooks);
@@ -22,10 +23,14 @@ module('Unit | Initializer | @busy-web/ember-cli-launch-darkly', function(hooks)
     destroyApp(this.application);
   });
 
-  // Replace this with your real tests.
   test('it works', async function(assert) {
-    await this.application.boot();
+    const done = assert.async();
 
-    assert.ok(true);
+    run.next(() => {
+      this.application.boot();
+
+      assert.ok(true);
+      done();
+    });
   });
 });
